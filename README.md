@@ -1,90 +1,84 @@
-Este notebook implementa uma estrutura avançada de análise para compreender os mecanismos de eficácia em intervenções para ansiedade, utilizando técnicas de mediação causal e aprendizado de máquina. O foco principal está em identificar e quantificar os caminhos causais pelos quais uma intervenção afeta os níveis de ansiedade pós-tratamento, examinando especificamente o papel mediador da ansiedade pré-intervenção.
-
-## Visão Geral
-
-O notebook adapta o framework MoE (Mixture of Experts) para incorporar análise de mediação causal utilizando a biblioteca statsmodels. Ele visa entender o *mecanismo* pelo qual a intervenção (atribuição de grupo) afeta a ansiedade pós-intervenção, examinando especificamente o papel mediador da ansiedade pré-intervenção.
+Este notebook investiga como a padronização da linguagem markdown afeta a carga cognitiva e o desempenho em tarefas quando utilizando diferentes modelos generativos. Utilizando dados sintéticos, o notebook simula um cenário onde desenvolvedores empregam diferentes LLMs (Large Language Models) com e sem markdown padronizado em suas rotinas diárias.
 
 ## Fluxo de Trabalho
 
-1. **Carregamento e Validação de Dados**: 
-   - Carrega dados sintéticos de intervenção para ansiedade
-   - Valida estrutura, conteúdo e tipos de dados
-   - Trata potenciais erros de forma elegante
+O notebook segue uma metodologia estruturada dividida em cinco etapas principais:
 
-2. **Pré-processamento de Dados**: 
-   - Codificação one-hot da coluna de grupos
-   - Escalonamento de características numéricas
-   - Renomeação de colunas para compatibilidade com statsmodels
+1. **Carregamento e Validação de Dados**: Carrega dados sintéticos e valida sua estrutura para garantir integridade.
+2. **Pré-processamento de Dados**: Aplica escalonamento MinMax nas características numéricas.
+3. **Visualização de Dados**: Gera gráficos KDE e Violin para comparar distribuições.
+4. **Análise Estatística**: Realiza análise bootstrap para calcular intervalos de confiança.
+5. **Relatório de Insights de LLM**: Sintetiza descobertas utilizando LLMs simulados (Grok, Claude, Grok-Enhanced).
 
-3. **Análise de Mediação Causal**: 
-   - Utiliza statsmodels para realizar análise de mediação causal
-   - Estima efeitos diretos e indiretos da intervenção
+## Recursos Técnicos
 
-4. **Análise de Valores SHAP**: 
-   - Quantifica a importância das características no contexto da mediação
-   - Visualiza contribuições de diferentes fatores para o resultado final
+O notebook implementa diversas técnicas avançadas:
 
-5. **Visualização de Dados**: 
-   - Gera gráficos KDE (Kernel Density Estimation)
-   - Cria visualizações do tipo Violin Plot
-   - Desenvolve gráficos de Coordenadas Paralelas
-   - Implementa visualizações de Hipergrafos
+- **Processamento de Dados**: Utiliza pandas para manipulação e validação de estruturas de dados.
+- **Visualização Estatística**: Emprega seaborn para gráficos KDE e Violin plots com estilo personalizado.
+- **Análise Estatística Robusta**: Implementa métodos bootstrap para estimar intervalos de confiança.
+- **Simulação de Agente DDQN**: Inclui uma classe de agente Double Deep Q-Network simplificada para demonstração.
+- **Integração de Múltiplos LLMs**: Simula a análise de dados por diferentes modelos generativos.
 
-6. **Resumo Estatístico**: 
-   - Realiza análise bootstrap para estimativa de intervalos de confiança
-   - Gera estatísticas resumidas dos resultados
+## Estrutura do Código
 
-7. **Relatório de Insights com LLM**: 
-   - Sintetiza descobertas usando diferentes modelos (Grok, Claude e Grok-Enhanced)
-   - Enfatiza resultados da análise de mediação
+O notebook está organizado nas seguintes seções:
 
-## Características Técnicas
+- **Importações e Configurações**: Configura bibliotecas e parâmetros globais.
+- **Implementação do Agente DDQN**: Define uma classe simplificada para demonstração.
+- **Funções Auxiliares**: Contém utilidades para:
+  - Validação e carregamento de dados
+  - Criação de visualizações
+  - Análise estatística
+  - Integração com LLMs simulados
+- **Script Principal**: Executa o fluxo de trabalho completo e gera relatórios.
 
-- **Bibliotecas Principais**: pandas, matplotlib, seaborn, networkx, scikit-learn, plotly, scipy, statsmodels, shap
-- **Modelos de Linguagem**: Integração com Grok, Claude e Grok-Enhanced (interfaces simuladas)
-- **Métodos Estatísticos**: Análise de mediação causal, bootstrap, estatísticas descritivas
-- **Visualizações**: KDE, violin plots, coordenadas paralelas, hipergrafos
-- **Estrutura Modular**: Funções bem definidas para cada etapa do processo
+## Conjuntos de Dados
 
-## Funções Principais
+O notebook utiliza um conjunto de dados sintéticos que contém:
 
-- `load_data_from_synthetic_string()`: Carrega dados de uma string CSV
-- `validate_dataframe()`: Verifica integridade e validade dos dados
-- `preprocess_data()`: Prepara dados para análise
-- `perform_causal_mediation_analysis()`: Realiza análise de mediação causal
-- `calculate_shap_values()`: Calcula e visualiza valores SHAP
-- `create_kde_plot()`, `create_violin_plot()`, `create_parallel_coordinates_plot()`, `visualize_hypergraph()`: Funções específicas de visualização
-- `perform_bootstrap()`: Realiza análise de bootstrap
-- `generate_insights_report()`: Gera relatório com insights baseados em LLMs
+- IDs de desenvolvedor
+- Tipos de modelo (Modelo A, Modelo B)
+- Status de padronização de markdown (0/1)
+- Métricas de carga cognitiva (escala de 0-10)
+- Métricas de desempenho de tarefas (escala de 0-100)
+
+## Saídas
+
+O notebook gera as seguintes saídas:
+
+- **Gráficos KDE**: Mostram a distribuição de carga cognitiva e desempenho de tarefas com e sem padronização.
+- **Gráficos Violin**: Visualizam a distribuição de métricas por status de padronização.
+- **Estatísticas Resumidas**: Incluem médias, desvios padrão e intervalos de confiança bootstrap.
+- **Relatório de Insights**: Combina análises simuladas de Grok-base, Claude 3.7 e Grok-Enhanced.
 
 ## Requisitos
 
 Para executar este notebook, são necessárias as seguintes bibliotecas:
+
 - pandas
 - matplotlib
 - seaborn
-- networkx
+- numpy
 - scikit-learn
-- plotly
 - scipy
-- statsmodels
-- shap
 
-O código inclui um comando `pip install` para instalar todas as dependências necessárias.
+## Como Usar
 
-## Uso
+1. Clone este repositório
+2. Instale as dependências necessárias
+3. Execute o notebook completo ou seções individuais
+4. Verifique os resultados na pasta de saída especificada
 
-O notebook foi projetado para funcionar tanto em ambientes Google Colab quanto em ambientes locais, com detecção automática do ambiente de execução. Para conjuntos de dados maiores ou personalizados, substitua a string de dados sintéticos pela leitura do seu próprio arquivo CSV.
+## Conclusões Principais
 
-## Palavras-chave
+A análise sugere que a padronização de markdown leva a:
 
-Mediação Causal, Análise de Mediação, Intervenção para Ansiedade, statsmodels, LLMs, Explicabilidade, SHAP, Visualização de Dados
+- Redução estatisticamente significativa na carga cognitiva dos desenvolvedores
+- Aumento correspondente no desempenho de tarefas
+- Benefícios consistentes em diferentes modelos generativos
 
-## Notas de Implementação
-
-- As funções para analisar texto com LLMs são implementadas como placeholders e devem ser substituídas por chamadas de API reais para uso em produção
-- O notebook inclui constantes e valores padrão configuráveis no início do código
-- Tratamento de erros implementado em todas as funções principais
+Estas conclusões indicam que o uso consistente de markdown pode melhorar a eficiência do desenvolvedor e reduzir o esforço mental necessário quando trabalhando com diferentes LLMs.
 
 ## Autor
 
